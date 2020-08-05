@@ -1,0 +1,48 @@
+V1Deployment {
+  apiVersion: undefined,
+  kind: undefined,
+  metadata: V1ObjectMeta {
+    annotations: { 'deployment.kubernetes.io/revision': '1' },
+    clusterName: undefined,
+    creationTimestamp: 2020-07-30T19:21:43.000Z,
+    deletionGracePeriodSeconds: undefined,
+    deletionTimestamp: undefined,
+    finalizers: undefined,
+    generateName: undefined,
+    generation: 1,
+    labels: { app: 'login' },
+    managedFields: [ [V1ManagedFieldsEntry], [V1ManagedFieldsEntry] ],
+    name: 'login',
+    namespace: 'default',
+    ownerReferences: undefined,
+    resourceVersion: '11475',
+    selfLink: '/apis/apps/v1/namespaces/default/deployments/login',
+    uid: '25ebf3d6-b8fe-4b7f-b0fc-e35915129ed7'
+  },
+  spec: V1DeploymentSpec {
+    minReadySeconds: undefined,
+    paused: undefined,
+    progressDeadlineSeconds: 600,
+    replicas: 1,
+    revisionHistoryLimit: 10,
+    selector: V1LabelSelector {
+      matchExpressions: undefined,
+      matchLabels: [Object]
+    },
+    strategy: V1DeploymentStrategy {
+      rollingUpdate: [V1RollingUpdateDeployment],
+      type: 'RollingUpdate'
+    },
+    template: V1PodTemplateSpec { metadata: [V1ObjectMeta], spec: [V1PodSpec] }
+  },
+  status: V1DeploymentStatus {
+    availableReplicas: 1,
+    collisionCount: undefined,
+    conditions: [ [V1DeploymentCondition], [V1DeploymentCondition] ],
+    observedGeneration: 1,
+    readyReplicas: 1,
+    replicas: 1,
+    unavailableReplicas: undefined,
+    updatedReplicas: 1
+  }
+}
