@@ -21,63 +21,54 @@ var namespace = {
 //     // console.log(res.body.items[1].status)
 // });
 
-// V1Pod
-
-// k8sApi.createNamespacedPod("default", )
-
-// let c
-
 let deployment = {
-    apiVersion: 'apps/v1',
-    kind: 'Deployment',
-    metadata:  {
-      labels: { app: 'login' },
-      name: 'login',
-      namespace: 'default',
+  apiVersion: 'apps/v1',
+  kind: 'Deployment',
+  metadata:  {
+    labels: { app: 'login' },
+    name: 'login',
+    namespace: 'default',
+  },
+  spec: {
+    replicas: 1,
+    selector:  {
+      matchLabels: { app: 'login' },
     },
-    spec: {
-      replicas: 1,
-      selector:  {
-        matchLabels: { app: 'login' },
+    template:  { 
+      metadata:  {
+        labels: { app: 'login' },
       },
-      template:  { 
-        metadata:  {
-          labels: { app: 'login' },
-        },
-        spec: {
-          containers: [{
-            name: 'login',
-            image: 'venkat19967/login',
-            ports: [{
-              containerPort: 3000,
-            }],
+      spec: {
+        containers: [{
+          name: 'login',
+          image: 'venkat19967/login',
+          ports: [{
+            containerPort: 3000,
           }],
-         
-        },
-        
-      },
+        }], 
+      }, 
     },
-    
-  };
+  },  
+};
 
-  let service = {
-    apiVersion: 'v1',
-    kind: 'Service',
-    metadata:  {
-      name: 'login',
-      namespace: 'default',
+let service = {
+  apiVersion: 'v1',
+  kind: 'Service',
+  metadata:{
+    name: 'login',
+    namespace: 'default',
+  },
+  spec: {
+    type: 'NodePort',
+    selector:{
+      app: 'login',
     },
-    spec: {
-      type: 'NodePort',
-      selector:  {
-         app: 'login',
-      },
-      ports: [{
-              NodePort: 30163,
-              port: 8080,
-              targetPort: 3000,
-            }],
-    },
+  ports: [{
+    NodePort: 30163,
+    port: 8080,
+    targetPort: 3000,
+  }],
+},
     
   };
 
@@ -86,42 +77,16 @@ AppsV1.createNamespacedDeployment('default',deployment)
   console.log(res.body) 
 })
 .catch((err) => {
-        console.log(err);
-    });
+  console.log(err);
+});
 
   
 
 
-    k8sApi.createNamespacedService('default',service).then((res) => {
-      console.log(res.body) 
-    })
-    .catch((err) => {
-            console.log(err);
-        });
-
-  
-// AppsV1.listNamespacedDeployment('default').then((res) => {
-//     console.log(res.body.items[1])
-//     // console.log(res.body.items[1].metadata)
-//     // console.log(res.body.items[1].spec)
-//     // console.log(res.body.items[1].status)
-// });
-
-
-
-// Create Namespace
-// k8sApi.createNamespace(namespace).then(
-//   (response) => {
-//     console.log('Created namespace');
-//     console.log(response.body);
-//     k8sApi.readNamespace(namespace.metadata.name).then(
-//       (response) => {
-//         console.log(response.response);
-// 	k8sApi.deleteNamespace(
-//           namespace.metadata.name, {} /* delete options */);
-//       });
-//   },
-//   (err) => {
-//     console.log('Error!: ' + err);
-//   }
-// );
+k8sApi.createNamespacedService('default',service)
+.then((res) => {
+  console.log(res.body) 
+})
+.catch((err) => {
+  console.log(err);
+});
