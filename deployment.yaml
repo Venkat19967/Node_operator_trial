@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login
+  namespace: default
+  labels:
+    app: login
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: login
+  template:
+    metadata:
+      labels:
+        app: login
+    spec:
+      containers:
+      - name: login
+        image: venkat19967/login
+        ports:
+        - containerPort: 3000

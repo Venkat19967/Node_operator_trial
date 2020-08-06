@@ -1,6 +1,8 @@
 const k8s = require('@kubernetes/client-node');
 const { V1Deployment } = require('@kubernetes/client-node');
 // const { V1PodIP, V1Pod, V1Deployment } = require('@kubernetes/client-node');
+const yaml = require('js-yaml');
+const fs   = require('fs');
 
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
@@ -14,6 +16,9 @@ var namespace = {
   }
 };
 
+const deployment = yaml.safeLoad(fs.readFileSync('deployment.yaml', 'utf8'));
+const service = yaml.safeLoad(fs.readFileSync('service.yaml', 'utf8'));
+
 // k8sApi.listNamespacedPod('default').then((res) => {
 //     // console.log(res.body)
 //     console.log(res.body.items[1].metadata)
@@ -21,56 +26,6 @@ var namespace = {
 //     // console.log(res.body.items[1].status)
 // });
 
-let deployment = {
-  apiVersion: 'apps/v1',
-  kind: 'Deployment',
-  metadata:  {
-    labels: { app: 'login' },
-    name: 'login',
-    namespace: 'default',
-  },
-  spec: {
-    replicas: 1,
-    selector:  {
-      matchLabels: { app: 'login' },
-    },
-    template:  { 
-      metadata:  {
-        labels: { app: 'login' },
-      },
-      spec: {
-        containers: [{
-          name: 'login',
-          image: 'venkat19967/login',
-          ports: [{
-            containerPort: 3000,
-          }],
-        }], 
-      }, 
-    },
-  },  
-};
-
-let service = {
-  apiVersion: 'v1',
-  kind: 'Service',
-  metadata:{
-    name: 'login',
-    namespace: 'default',
-  },
-  spec: {
-    type: 'NodePort',
-    selector:{
-      app: 'login',
-    },
-  ports: [{
-    NodePort: 30163,
-    port: 8080,
-    targetPort: 3000,
-  }],
-},
-    
-  };
 
 AppsV1.createNamespacedDeployment('default',deployment)
 .then((res) => {

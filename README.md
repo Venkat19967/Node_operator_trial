@@ -24,4 +24,4 @@ wait till the cluster is up and running
 6. Get the service URL by running:
 `minikube service --url login`
 
-7. Copy paste the URL in the borwser to access the webapp
+7. Copy paste the URL in the browser to access the webapp
